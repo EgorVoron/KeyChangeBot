@@ -31,8 +31,6 @@ async def send_help(message: types.Message):
 @dp.message_handler(commands=['kc'])
 async def run_from_group(message: types.Message):
     if from_group(message):
-        print(message.text)
-        print(message.reply_to_message)
         if message.reply_to_message:
             print(message.reply_to_message.text)
             translated = translate_string(message.reply_to_message.text)
@@ -41,7 +39,6 @@ async def run_from_group(message: types.Message):
 
 @dp.message_handler()
 async def run_from_user(message: types.Message):
-    print(message.text)
     translated = translate_string(message.text)
     await message.reply(translated)
 
