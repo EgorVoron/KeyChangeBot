@@ -1,6 +1,6 @@
 try:
     from keypy.dictionaries import *
-except ModuleNotFoundError:
+except ImportError:
     from dictionaries import *
 
 
