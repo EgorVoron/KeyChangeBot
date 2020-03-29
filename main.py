@@ -1,18 +1,20 @@
 from keypy import reverse_keyboard
-from config import API_TOKEN
-
 from datetime import datetime, timedelta
-
+import argparse
 from aiogram import Bot, Dispatcher, types, executor
+
+parser = argparse.ArgumentParser()
+parser.add_argument('token')
+args = parser.parse_args()
+token = args.token
+
+bot = Bot(token=token)
+dp = Dispatcher(bot)
 
 
 def translate_string(input_string):
     result = reverse_keyboard(string=input_string, keyboard_lang_1='rus', keyboard_lang_2='eng')
     return result
-
-
-bot = Bot(token=API_TOKEN)
-dp = Dispatcher(bot)
 
 
 def from_group(message: types.Message):
@@ -46,4 +48,5 @@ async def run_from_user(message: types.Message):
 
 if __name__ == '__main__':
     print('Starting at', datetime.now() + timedelta(hours=+3))
+
     executor.start_polling(dp, skip_updates=True)
