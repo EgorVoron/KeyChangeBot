@@ -1,6 +1,8 @@
 from keypy import reverse_keyboard
 from config import API_TOKEN
 
+from datetime import datetime, timedelta
+
 from aiogram import Bot, Dispatcher, types, executor
 
 
@@ -32,7 +34,6 @@ async def send_help(message: types.Message):
 async def run_from_group(message: types.Message):
     if from_group(message):
         if message.reply_to_message:
-            print(message.reply_to_message.text)
             translated = translate_string(message.reply_to_message.text)
             await message.reply(translated)
 
@@ -44,4 +45,5 @@ async def run_from_user(message: types.Message):
 
 
 if __name__ == '__main__':
+    print('Starting at', datetime.now() + timedelta(hours=+3))
     executor.start_polling(dp, skip_updates=True)
