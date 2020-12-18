@@ -99,14 +99,23 @@ def reverse_keyboard(string: str, keyboard_lang_1, keyboard_lang_2):
         raise ValueError('keyboard_lang_1 and keyboard_lang_2 languages must be different')
 
     result = ''
-    for char in string:
-        char_lang = identify_char_lang(char)
-        if not char_lang:
-            result += char
-        else:
-            if char_lang == keyboard_lang_1:
+
+    words = string.split()
+    for word in words:
+        word_lang = None
+        for char in word:
+            char_lang = identify_char_lang(char)
+            if char_lang:
+                word_lang = char_lang
+
+        if not word_lang:
+            result += word
+            continue
+
+        for char in word:
+            if word_lang == keyboard_lang_1:
                 dictionary = choose_dictionary(keyboard_lang_1, keyboard_lang_2)
-            elif char_lang == keyboard_lang_2:
+            elif word_lang == keyboard_lang_2:
                 dictionary = choose_dictionary(keyboard_lang_2, keyboard_lang_1)
             else:
                 raise ValueError(
@@ -114,4 +123,5 @@ def reverse_keyboard(string: str, keyboard_lang_1, keyboard_lang_2):
                     f"or 'arm' (armenian), not '{keyboard_lang_1}' and '{keyboard_lang_2}'")
             translated_char = translate_char(char, dictionary)
             result += translated_char
+        result += ' '
     return result
